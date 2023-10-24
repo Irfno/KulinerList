@@ -1,4 +1,6 @@
 import React, {useState, useEffect} from 'react';
+import {MasakanPopuler} from './data';
+// import{MasakanPopuler} from './MasakanPopuler';
 import {
   View,
   Text,
@@ -9,29 +11,30 @@ import {
   ScrollView,
   ImageBackground,
 } from 'react-native';
+// import {MasakanPopuler} from 'app.js';
 import { Category, Home, Profile} from 'iconsax-react-native';
 const App = () => {
   const [kategori, setKategori] = useState([
     {
-      nama: 'Ayam',
+      nama: 'Sumatera',
     },
     {
-      nama: 'Sayur',
+      nama: 'Jawa',
     },
     {
-      nama: 'Minuman',
+      nama: 'Kalimantan',
     },
     {
-      nama: 'Salad',
+      nama: 'Bali',
     },
     {
-      nama: 'Gorengan',
+      nama: 'Nusa Tenggara',
     },
     {
-      nama: 'Rebus',
+      nama: 'Sulawesi',
     },
     {
-      nama: 'Telur',
+      nama: 'Papua',
     },
   ]);
 
@@ -41,51 +44,52 @@ const App = () => {
 
   const [dataTrending, setDataTrending] = useState([
     {
-      namaResep: 'Ayam Goreng Mantap',
-      author: 'Anggi',
-      image: require('./src/images/1.jpg'),
+      namaMakanan: 'Empek Empek',
+      author: 'Sumatera Selatan',
+      image: require('./src/images/pekpek.jpg'),
     },
     {
-      namaResep: 'Ayam Goreng Rica Rica',
-      author: 'Nanda',
-      image: require('./src/images/2.jpg'),
+      namaMakanan: 'Rawon',
+      author: 'Jawa Timur',
+      image: require('./src/images/rawon.jpg'),
     },
     {
-      namaResep: 'Ayam Goreng Telur',
-      author: 'Irfan',
-      image: require('./src/images/3.jpg'),
+      namaMakanan: 'Soto Lamongan',
+      author: 'Jawa Timur',
+      image: require('./src/images/sotolamongan.jpg'),
     },
     {
-      namaResep: 'Mie Goreng Ayam',
-      author: 'Made',
-      image: require('./src/images/4.jpg'),
+      namaMakanan: 'Mie Aceh',
+      author: 'Aceh',
+      image: require('./src/images/mieaceh.jpg'),
+    },
+    {
+      namaMakanan: 'Gudeg',
+      author: 'DI Yogyakarta',
+      image: require('./src/images/gudeg-2.jpg'),
     },
   ]);
 
   const [dataVideo, setDataVideo] = useState([
     {
-      namaResep: 'Ayam Goreng Mantap',
-      author: 'Anggi',
-      image: require('./src/images/3.jpg'),
-      length: '10:10',
+      namaMakanan: 'Kue Putu',
+      author: 'Jawa Timur',
+      image: require('./src/images/kueputu.jpg'),
     },
     {
-      namaResep: 'Ayam Goreng Rica Rica',
-      author: 'Nanda',
-      image: require('./src/images/4.jpg'),
-      length: '09:09',
+      namaMakanan: 'Lumpia',
+      author: 'Semarang',
+      image: require('./src/images/lumpia.jpg'),
     },
     {
-      namaResep: 'Ayam Goreng Telur',
-      author: 'Fernandes',
-      image: require('./src/images/1.jpg'),
-      length: '12:13',
+      namaMakanan: 'Dodol',
+      author: 'Garut',
+      image: require('./src/images/dodol.jpg'),
     },
     {
-      namaResep: 'Mie Goreng Ayam',
-      author: 'Made',
-      image: require('./src/images/2.jpg'),
-      length: '12:14',
+      namaMakanan: 'Serabi',
+      author: 'Solo',
+      image: require('./src/images/serabi.jpeg'),
     },
   ]);
 
@@ -142,7 +146,7 @@ const App = () => {
               alignItems: 'center',
             }}>
             <Text style={{fontSize: 18, fontWeight: 'bold', color: '#212121'}}>
-              Trending
+              Makanan Populer
             </Text>
           </View>
 
@@ -194,7 +198,7 @@ const App = () => {
                     fontSize: 18,
                     fontWeight: 'bold',
                   }}>
-                  {item.namaResep}
+                  {item.namaMakanan}
                 </Text>
                 <Text>{item.author}</Text>
               </TouchableOpacity>
@@ -215,7 +219,7 @@ const App = () => {
               alignItems: 'center',
             }}>
             <Text style={{fontSize: 18, fontWeight: 'bold', color: '#212121'}}>
-              Video Masak
+              Makanan Ringan
             </Text>
           </View>
 
@@ -314,7 +318,7 @@ const App = () => {
                     fontSize: 18,
                     fontWeight: 'bold',
                   }}>
-                  {item.namaResep}
+                  {item.namaMakanan}
                 </Text>
                 <Text>{item.author}</Text>
               </TouchableOpacity>
