@@ -1,6 +1,5 @@
-import React, {useState, useEffect} from 'react';
-import {MasakanPopuler} from './components/MasakanPopuler';
-// import{MasakanPopuler} from './MasakanPopuler';
+import { useNavigation } from '@react-navigation/native';
+import React, { useState, useEffect } from 'react';
 import {
   View,
   Text,
@@ -11,8 +10,6 @@ import {
   ScrollView,
   ImageBackground,
 } from 'react-native';
-// import {MasakanPopuler} from 'app.js';
-import { Category, Home, Profile} from 'iconsax-react-native';
 const HomeScreens = () => {
   const [kategori, KategoriList] = useState([
     {
@@ -90,13 +87,15 @@ const HomeScreens = () => {
     },
   ]);
 
+  const nav = useNavigation()
+
   return (
-    <View style={{flex: 1, backgroundColor: '#f5f5f5'}}>
+    <View style={{ flex: 1, backgroundColor: '#f5f5f5' }}>
       <ScrollView>
         <StatusBar backgroundColor="#f5f5f5" barStyle="dark-content" />
-        <View style={{marginHorizontal: 20, marginBottom: 20, marginTop: 20}}>
-          <Text style={{fontSize: 28, fontWeight: 'bold', color: '#212121'}}>
-            Kuliner<Text style={{color: 'rgb(255, 81, 9)'}}>List</Text>
+        <View style={{ marginHorizontal: 20, marginBottom: 20, marginTop: 20 }}>
+          <Text style={{ fontSize: 28, fontWeight: 'bold', color: '#212121' }}>
+            Kuliner<Text style={{ color: 'rgb(255, 81, 9)' }}>List</Text>
           </Text>
         </View>
         <View>
@@ -104,8 +103,8 @@ const HomeScreens = () => {
             data={kategori}
             horizontal
             showsHorizontalScrollIndicator={false}
-            style={{marginLeft: 10}}
-            renderItem={({item}) => (
+            style={{ marginLeft: 10 }}
+            renderItem={({ item }) => (
               <TouchableOpacity
                 style={{
                   marginRight: 5,
@@ -142,7 +141,7 @@ const HomeScreens = () => {
               justifyContent: 'center',
               alignItems: 'center',
             }}>
-            <Text style={{fontSize: 18, fontWeight: 'bold', color: '#212121'}}>
+            <Text style={{ fontSize: 18, fontWeight: 'bold', color: '#212121' }}>
               Makanan Populer
             </Text>
           </View>
@@ -155,7 +154,7 @@ const HomeScreens = () => {
               flexDirection: 'row',
               marginTop: 10,
             }}>
-            <Text style={{fontSize: 14}}>Lihat Semua</Text>
+            <Text style={{ fontSize: 14 }}>Lihat Semua</Text>
             {/* <Icon name="chevron-forward" size={20} color="#bdbdbd" /> */}
           </TouchableOpacity>
         </View>
@@ -165,8 +164,8 @@ const HomeScreens = () => {
             data={dataTrending}
             horizontal
             showsHorizontalScrollIndicator={false}
-            style={{marginLeft: 10}}
-            renderItem={({item}) => (
+            style={{ marginLeft: 10 }}
+            renderItem={({ item }) => (
               <TouchableOpacity
                 style={{
                   marginRight: 5,
@@ -177,7 +176,9 @@ const HomeScreens = () => {
                   marginBottom: 10,
                   borderRadius: 15,
                   marginLeft: 5,
-                }}>
+                }}
+                onPress={()=> nav.navigate('Detail')}
+                >
                 <Image
                   source={item.image}
                   style={{
@@ -215,7 +216,7 @@ const HomeScreens = () => {
               justifyContent: 'center',
               alignItems: 'center',
             }}>
-            <Text style={{fontSize: 18, fontWeight: 'bold', color: '#212121'}}>
+            <Text style={{ fontSize: 18, fontWeight: 'bold', color: '#212121' }}>
               Makanan Ringan
             </Text>
           </View>
@@ -228,7 +229,7 @@ const HomeScreens = () => {
               flexDirection: 'row',
               marginTop: 10,
             }}>
-            <Text style={{fontSize: 14}}>Lihat Semua</Text>
+            <Text style={{ fontSize: 14 }}>Lihat Semua</Text>
             {/* <Icon name="chevron-forward" size={20} color="#bdbdbd" /> */}
           </TouchableOpacity>
         </View>
@@ -238,8 +239,8 @@ const HomeScreens = () => {
             data={dataVideo}
             horizontal
             showsHorizontalScrollIndicator={false}
-            style={{marginLeft: 10}}
-            renderItem={({item}) => (
+            style={{ marginLeft: 10 }}
+            renderItem={({ item }) => (
               <TouchableOpacity
                 style={{
                   marginRight: 5,
@@ -276,28 +277,6 @@ const HomeScreens = () => {
           />
         </View>
       </ScrollView>
-      <View
-        style={{
-          flexDirection: 'row',
-          paddingTop: 5,
-          backgroundColor: '#FFFFFF',
-        }}>
-        <TouchableOpacity
-          style={{justifyContent: 'center', alignItems: 'center', flex: 1}}>
-          <Home color='rgb(255, 81, 9)' variant="Linear" size={24} />
-          <Text style={{color: 'rgb(255, 81, 9)'}}>Home</Text>
-        </TouchableOpacity>
-        <TouchableOpacity
-          style={{justifyContent: 'center', alignItems: 'center', flex: 1}}>
-          <Category color='rgb(255, 81, 9)' variant="Linear" size={24} />
-          <Text style={{color: 'rgb(255, 81, 9)'}}>Category</Text>
-        </TouchableOpacity>
-        <TouchableOpacity
-          style={{justifyContent: 'center', alignItems: 'center', flex: 1}}>
-          <Profile color='rgb(255, 81, 9)' variant="Linear" size={24} />
-          <Text style={{color: 'rgb(255, 81, 9)'}}>Profile</Text>
-        </TouchableOpacity>
-      </View>
     </View>
   );
 };
