@@ -6,6 +6,7 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'
 import { HomeScreens, Kategori, Profile } from './src/screens'
 import { Category, Home, User } from 'iconsax-react-native'
 import Detail from './src/screens/Detail'
+import AddMenu from './src/screens/AddMenu'
 
 const Tab = createBottomTabNavigator()
 const Stack = createStackNavigator()
@@ -36,6 +37,7 @@ export default function App() {
       <Stack.Navigator screenOptions={{ headerShown: false }}>
         <Stack.Screen name='Bottom' component={Bottom} />
         <Stack.Screen name='Detail' component={Detail} />
+        <Stack.Screen name='AddMenu' component={AddMenu} />
       </Stack.Navigator>
     </NavigationContainer >
   )
