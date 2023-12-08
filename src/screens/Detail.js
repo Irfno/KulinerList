@@ -1,10 +1,35 @@
-import { StyleSheet, Text, TouchableOpacity, View, Image, ScrollView, Animated } from 'react-native'
+import { StyleSheet, Text, TouchableOpacity, View, Image, ScrollView, Animated, Dimensions } from 'react-native'
 import React, { useRef } from 'react'
 import { ArrowLeft, More } from 'iconsax-react-native'
-import { useNavigation } from '@react-navigation/native';
+import { useNavigation, useRoute } from '@react-navigation/native';
+
+const winWidht = Dimensions.get('screen').width
 
 export default function Detail() {
     const nav = useNavigation()
+    const route = useRoute()
+
+
+    const item = route.params?.data
+    const title = route.params?.data.title
+    const image = route.params?.data.image
+    const desc = route.params?.data.desc
+    
+    async function deleteData() {
+        try {
+            var id = route.params?.data.id
+            const data = await fetch('https://65730399192318b7db416788.mockapi.io/kList/Menu/' + id, {
+                method: 'DELETE',
+                headers: {
+                    'Content-type': 'application/json',
+                    'Accept': 'application/json',
+                }
+            })
+            console.log(await data.json())
+        } catch (e) {
+            console.log(e)
+        }
+    }
 
     const scrollY = useRef(new Animated.Value(0)).current
 
@@ -27,15 +52,19 @@ export default function Detail() {
                     [{ nativeEvent: { contentOffset: { y: scrollY } } }],
                     { useNativeDriver: true },
                 )}>
-                <Animated.Image style={styles.imageStyle(scrollY)} source={require('../images/pekpek.jpg')} />
+                <Animated.Image style={styles.imageStyle(scrollY)} source={{ uri: image }} />
                 <View style={styles.cardText}>
 
-                    <Text style={styles.titleText}>Pempek - Palembang</Text>
-                    <Text style={styles.descText}>Pempek adalah makanan yang dibuat dari daging ikan yang digiling lembut yang dicampur tepung kanji atau tepung sagu, serta komposisi beberapa bahan lain seperti telur, bawang putih yang dihaluskan, penyedap rasa, dan garam. Pempek biasanya disajikan dengan kuah yang disebut cuka yang memiliki rasa asam, manis, dan pedas. Pempek merupakan makanan khas Palembang - Sumatera Selatan. Pada tahun 1880-an, penjual biasa memikul satu keranjang penuh pempek sambil berjalan kaki berkeliling menjajakan dagangannya. Di kota nya pempek , palembang. cara makan pempek yang benar adalah dengan mengunakan mangkuk kecil sebagai tempat cukonya lalu di makan pempeknya setelah itu pempek dicocol dan cukonya diseruput untuk menambah rasanya nikmatnya.</Text>
-                    <Text style={styles.descText}>Pempek adalah makanan yang dibuat dari daging ikan yang digiling lembut yang dicampur tepung kanji atau tepung sagu, serta komposisi beberapa bahan lain seperti telur, bawang putih yang dihaluskan, penyedap rasa, dan garam. Pempek biasanya disajikan dengan kuah yang disebut cuka yang memiliki rasa asam, manis, dan pedas. Pempek merupakan makanan khas Palembang - Sumatera Selatan. Pada tahun 1880-an, penjual biasa memikul satu keranjang penuh pempek sambil berjalan kaki berkeliling menjajakan dagangannya. Di kota nya pempek , palembang. cara makan pempek yang benar adalah dengan mengunakan mangkuk kecil sebagai tempat cukonya lalu di makan pempeknya setelah itu pempek dicocol dan cukonya diseruput untuk menambah rasanya nikmatnya.</Text>
-                    <Text style={styles.descText}>Pempek adalah makanan yang dibuat dari daging ikan yang digiling lembut yang dicampur tepung kanji atau tepung sagu, serta komposisi beberapa bahan lain seperti telur, bawang putih yang dihaluskan, penyedap rasa, dan garam. Pempek biasanya disajikan dengan kuah yang disebut cuka yang memiliki rasa asam, manis, dan pedas. Pempek merupakan makanan khas Palembang - Sumatera Selatan. Pada tahun 1880-an, penjual biasa memikul satu keranjang penuh pempek sambil berjalan kaki berkeliling menjajakan dagangannya. Di kota nya pempek , palembang. cara makan pempek yang benar adalah dengan mengunakan mangkuk kecil sebagai tempat cukonya lalu di makan pempeknya setelah itu pempek dicocol dan cukonya diseruput untuk menambah rasanya nikmatnya.</Text>
+                    <Text style={styles.titleText}>{title}</Text>
+                    <Text style={styles.descText}>{desc}</Text>
                 </View>
             </Animated.ScrollView>
+            <TouchableOpacity style={styles.cardButton} onPress={() => nav.navigate('EditMenu', { data: item })}>
+                <Text style={styles.buttonText}>Update</Text>
+            </TouchableOpacity>
+            <TouchableOpacity style={styles.cardButton} onPress={deleteData}>
+                <Text style={styles.buttonText}>Delete</Text>
+            </TouchableOpacity>
         </View >
     )
 }
@@ -77,7 +106,7 @@ const styles = StyleSheet.create({
         marginLeft: 4,
     },
     imageStyle: scrollY => ({
-        resizeMode: 'contain',
+        resizeMode: 'cover',
         height: 300,
         width: 425,
         borderRadius: 16,
@@ -114,5 +143,20 @@ const styles = StyleSheet.create({
         fontSize: 16,
         textAlign: 'justify',
         lineHeight: 25,
+    },
+    cardButton: {
+        alignSelf: 'center',
+        marginBottom: 16,
+        justifyContent: 'center',
+        alignItems: 'center',
+        paddingVertical: 16,
+        width: winWidht - 48,
+        backgroundColor: 'rgb(255, 81, 9)',
+        borderRadius: 4,
+    },
+    buttonText: {
+        color: '#FFF',
+        fontWeight: 'bold',
+        fontSize: 16,
     },
 })

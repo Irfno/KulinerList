@@ -64,30 +64,25 @@ const HomeScreens = () => {
     },
   ]);
 
-  const [dataVideo] = useState([
-    {
-      namaMakanan: 'Kue Putu',
-      author: 'Jawa Timur',
-      image: require('../../images/kueputu.jpg'),
-    },
-    {
-      namaMakanan: 'Lumpia',
-      author: 'Semarang',
-      image: require('../../images/lumpia.jpg'),
-    },
-    {
-      namaMakanan: 'Dodol',
-      author: 'Garut',
-      image: require('../../images/dodol.jpg'),
-    },
-    {
-      namaMakanan: 'Serabi',
-      author: 'Solo',
-      image: require('../../images/serabi.jpeg'),
-    },
-  ]);
-
   const nav = useNavigation()
+  const [menuData, setMenuData] = useState([])
+  const [count, setCount] = useState(0)
+
+  useEffect(() => {
+    tampilData()
+  }, [count])
+
+  async function tampilData() {
+    try {
+      const data = await fetch('https://65730399192318b7db416788.mockapi.io/kList/Menu/')
+      const response = await data.json()
+      setMenuData(response)
+      setCount(count+1)
+      console.log(response)
+    } catch (e) {
+      console.log(e)
+    }
+  }
 
   return (
     <View style={{ flex: 1, backgroundColor: '#f5f5f5' }}>
@@ -177,8 +172,8 @@ const HomeScreens = () => {
                   borderRadius: 15,
                   marginLeft: 5,
                 }}
-                onPress={()=> nav.navigate('Detail')}
-                >
+                onPress={() => nav.navigate('Detail')}
+              >
                 <Image
                   source={item.image}
                   style={{
@@ -220,23 +215,11 @@ const HomeScreens = () => {
               Makanan Ringan
             </Text>
           </View>
-
-          <TouchableOpacity
-            style={{
-              justifyContent: 'flex-end',
-              alignItems: 'center',
-              flex: 1,
-              flexDirection: 'row',
-              marginTop: 10,
-            }}>
-            <Text style={{ fontSize: 14 }}>Lihat Semua</Text>
-            {/* <Icon name="chevron-forward" size={20} color="#bdbdbd" /> */}
-          </TouchableOpacity>
         </View>
 
         <View>
           <FlatList
-            data={dataVideo}
+            data={menuData}
             horizontal
             showsHorizontalScrollIndicator={false}
             style={{ marginLeft: 10 }}
@@ -251,9 +234,10 @@ const HomeScreens = () => {
                   marginBottom: 10,
                   borderRadius: 15,
                   marginLeft: 5,
-                }}>
+                }}
+                onPress={() => nav.navigate('Detail', {data: item})}>
                 <ImageBackground
-                  source={item.image}
+                  source={{ uri:item.image }}
                   style={{
                     width: 200,
                     height: 150,
@@ -261,7 +245,7 @@ const HomeScreens = () => {
                     marginBottom: 10,
                     borderRadius: 3,
                   }}
-                  resizeMode={'stretch'}>
+                  resizeMode={'cover'}>
                 </ImageBackground>
                 <Text
                   style={{
@@ -269,9 +253,9 @@ const HomeScreens = () => {
                     fontSize: 18,
                     fontWeight: 'bold',
                   }}>
-                  {item.namaMakanan}
+                  {item.title}
                 </Text>
-                <Text>{item.author}</Text>
+                <Text style={{ color: '#979797' }}>{item.desc}</Text>
               </TouchableOpacity>
             )}
           />
