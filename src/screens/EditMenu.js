@@ -2,6 +2,7 @@ import { Dimensions, StyleSheet, Text, TextInput, TouchableOpacity, View } from 
 import React, { useState } from 'react'
 import { ArrowLeft } from 'iconsax-react-native'
 import { useNavigation, useRoute } from '@react-navigation/native'
+import  firestore  from '@react-native-firebase/firestore'
 
 const winWidht = Dimensions.get('screen').width
 const winHeight = Dimensions.get('screen').height
@@ -16,22 +17,29 @@ export default function EditMenu() {
 
     async function patchData() {
         try {
-            var id = route.params?.data.id
-            const data = await fetch('https://65730399192318b7db416788.mockapi.io/kList/Menu/' + id, {
-                method: 'PUT',
-                headers: {
-                    'Content-type': 'application/json',
-                    'Accept': 'application/json',
-                },
-                body: JSON.stringify({
-                    title: title,
-                    image: image,
-                    desc: desc,
-                })
+            var id = route.params?.id
+            // const data = await fetch('https://65730399192318b7db416788.mockapi.io/kList/Menu/' + id, {
+            //     method: 'PUT',
+            //     headers: {
+            //         'Content-type': 'application/json',
+            //         'Accept': 'application/json',
+            //     },
+            //     body: JSON.stringify({
+            //         title: title,
+            //         image: image,
+            //         desc: desc,
+            //     })
 
+            // })
+            const data = await firestore().collection('menu').doc(id).update({
+                title,
+                image,
+                desc,
             })
-            console.log(await data.json())
-            nav.navigate('Profile')
+
+            console.log(data)
+
+            nav.navigate('HomeScreens')
         } catch (e) {
             console.log(e)
         }

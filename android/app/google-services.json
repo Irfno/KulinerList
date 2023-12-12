@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "631066990288",
+    "project_id": "kulinerlist",
+    "storage_bucket": "kulinerlist.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:631066990288:android:bc45efa7f1ae4222e970d5",
+        "android_client_info": {
+          "package_name": "com.kulinerlist"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC_-ir9FJsCQ3_-0a1Dltpx9k-1Qw0uC3U"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

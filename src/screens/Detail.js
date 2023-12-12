@@ -2,6 +2,7 @@ import { StyleSheet, Text, TouchableOpacity, View, Image, ScrollView, Animated, 
 import React, { useRef } from 'react'
 import { ArrowLeft, More } from 'iconsax-react-native'
 import { useNavigation, useRoute } from '@react-navigation/native';
+import  firestore  from '@react-native-firebase/firestore'
 
 const winWidht = Dimensions.get('screen').width
 
@@ -17,15 +18,16 @@ export default function Detail() {
     
     async function deleteData() {
         try {
-            var id = route.params?.data.id
-            const data = await fetch('https://65730399192318b7db416788.mockapi.io/kList/Menu/' + id, {
-                method: 'DELETE',
-                headers: {
-                    'Content-type': 'application/json',
-                    'Accept': 'application/json',
-                }
-            })
-            console.log(await data.json())
+            var id = route.params?.id
+            // const data = await fetch('https://65730399192318b7db416788.mockapi.io/kList/Menu/' + id, {
+            //     method: 'DELETE',
+            //     headers: {
+            //         'Content-type': 'application/json',
+            //         'Accept': 'application/json',
+            //     }
+            // })
+            const data = await firestore().collection('menu').doc(id).delete()
+            nav.navigate('HomeScreens')
         } catch (e) {
             console.log(e)
         }
@@ -59,7 +61,7 @@ export default function Detail() {
                     <Text style={styles.descText}>{desc}</Text>
                 </View>
             </Animated.ScrollView>
-            <TouchableOpacity style={styles.cardButton} onPress={() => nav.navigate('EditMenu', { data: item })}>
+            <TouchableOpacity style={styles.cardButton} onPress={() => nav.navigate('EditMenu', { data: item, id: route.params?.id })}>
                 <Text style={styles.buttonText}>Update</Text>
             </TouchableOpacity>
             <TouchableOpacity style={styles.cardButton} onPress={deleteData}>

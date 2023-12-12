@@ -2,6 +2,7 @@ import { Dimensions, StyleSheet, Text, TextInput, TouchableOpacity, View } from 
 import React, { useState } from 'react'
 import { ArrowLeft } from 'iconsax-react-native'
 import { useNavigation } from '@react-navigation/native'
+import  firestore  from '@react-native-firebase/firestore'
 
 const winWidht = Dimensions.get('screen').width
 const winHeight = Dimensions.get('screen').height
@@ -15,20 +16,27 @@ export default function AddMenu() {
 
   async function postData() {
     try {
-      const data = await fetch('https://65730399192318b7db416788.mockapi.io/kList/Menu/', {
-        method: 'POST',
-        headers: {
-          'Content-type': 'application/json',
-          'Accept': 'application/json',
-        },
-        body: JSON.stringify({
-          title: title,
-          image: image,
-          desc: desc,
-        })
+      // const data = await fetch('https://65730399192318b7db416788.mockapi.io/kList/Menu/', {
+      //   method: 'POST',
+      //   headers: {
+      //     'Content-type': 'application/json',
+      //     'Accept': 'application/json',
+      //   },
+      //   body: JSON.stringify({
+      //     title: title,
+      //     image: image,
+      //     desc: desc,
+      //   })
 
+      // })
+
+      const data = await firestore().collection('menu').add({
+        title,
+        image,
+        desc,
       })
-      console.log(await data.json())
+
+      console.log((await data.get()).data())
       nav.navigate('Profile')
     } catch (e) {
       console.log(e)

@@ -1,5 +1,6 @@
-import { useNavigation } from '@react-navigation/native';
+import { useIsFocused, useNavigation } from '@react-navigation/native';
 import React, { useState, useEffect } from 'react';
+import  firestore  from '@react-native-firebase/firestore'
 import {
   View,
   Text,
@@ -66,19 +67,19 @@ const HomeScreens = () => {
 
   const nav = useNavigation()
   const [menuData, setMenuData] = useState([])
-  const [count, setCount] = useState(0)
+  const isFocused = useIsFocused()
 
   useEffect(() => {
     tampilData()
-  }, [count])
+  }, [isFocused])
 
   async function tampilData() {
     try {
-      const data = await fetch('https://65730399192318b7db416788.mockapi.io/kList/Menu/')
-      const response = await data.json()
-      setMenuData(response)
-      setCount(count+1)
-      console.log(response)
+      // const data = await fetch('https://65730399192318b7db416788.mockapi.io/kList/Menu/')
+      // const response = await data.json()
+      const data = firestore().collection('menu').get()
+      setMenuData((await data).docs)
+      console.log((await data).docs)
     } catch (e) {
       console.log(e)
     }
@@ -150,7 +151,6 @@ const HomeScreens = () => {
               marginTop: 10,
             }}>
             <Text style={{ fontSize: 14 }}>Lihat Semua</Text>
-            {/* <Icon name="chevron-forward" size={20} color="#bdbdbd" /> */}
           </TouchableOpacity>
         </View>
 
@@ -235,9 +235,9 @@ const HomeScreens = () => {
                   borderRadius: 15,
                   marginLeft: 5,
                 }}
-                onPress={() => nav.navigate('Detail', {data: item})}>
+                onPress={() => nav.navigate('Detail', {data: item._data, id: item.id})}>
                 <ImageBackground
-                  source={{ uri:item.image }}
+                  source={{ uri: item._data.image }}
                   style={{
                     width: 200,
                     height: 150,
@@ -253,9 +253,9 @@ const HomeScreens = () => {
                     fontSize: 18,
                     fontWeight: 'bold',
                   }}>
-                  {item.title}
+                  {item._data.title}
                 </Text>
-                <Text style={{ color: '#979797' }}>{item.desc}</Text>
+                <Text style={{ color: '#979797' }}>{item._data.desc}</Text>
               </TouchableOpacity>
             )}
           />
