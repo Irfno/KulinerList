@@ -8,6 +8,8 @@ import { Category, Home, User } from 'iconsax-react-native'
 import Detail from './src/screens/Detail'
 import AddMenu from './src/screens/AddMenu'
 import EditMenu from './src/screens/EditMenu'
+import Register from './src/screens/Register'
+import Login from './src/screens/Login'
 
 const Tab = createBottomTabNavigator()
 const Stack = createStackNavigator()
@@ -36,6 +38,8 @@ export default function App() {
   return (
     <NavigationContainer>
       <Stack.Navigator screenOptions={{ headerShown: false }}>
+        <Stack.Screen name='Login' component={Login} />
+        <Stack.Screen name='Register' component={Register} />
         <Stack.Screen name='Bottom' component={Bottom} />
         <Stack.Screen name='Detail' component={Detail} />
         <Stack.Screen name='AddMenu' component={AddMenu} />

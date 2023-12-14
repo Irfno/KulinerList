@@ -1,10 +1,20 @@
-import { useNavigation } from '@react-navigation/native';
+import { StackActions, useNavigation } from '@react-navigation/native';
 import { Edit } from 'iconsax-react-native';
 import React from 'react';
-import { View, Text, Image, ScrollView, TouchableOpacity } from 'react-native';
+import { View, Text, Image, ScrollView, TouchableOpacity, StyleSheet } from 'react-native';
+import auth from '@react-native-firebase/auth'
 
 const Profile = () => {
   const navigation = useNavigation()
+
+  async function logout() {
+    try {
+      await auth().signOut()
+    } catch (e) {
+      console.log(e);
+    }
+    navigation.dispatch(StackActions.replace('Login'))
+  }
   return (
     <View style={{ flex: 1, backgroundColor: '#f5f5f5' }}>
       <View style={{ margin: 20 }}>
@@ -74,6 +84,9 @@ const Profile = () => {
           />
         </View>
       </ScrollView>
+      <TouchableOpacity style={styles.buttonSignOut} onPress={logout}>
+        <Text style={styles.buttonText}>Sign Out</Text>
+      </TouchableOpacity>
       <TouchableOpacity
         style={{
           backgroundColor: 'rgb(255, 81, 9)',
@@ -88,8 +101,27 @@ const Profile = () => {
       >
         <Edit color='#FFF' variant='Linear' size={20} />
       </TouchableOpacity>
+
     </View>
   );
 };
 
 export default Profile;
+
+const styles = StyleSheet.create({
+  buttonSignOut: {
+    marginBottom: 128,
+    padding: 16,
+    marginHorizontal: 16,
+    backgroundColor: '#ff5109',
+    borderRadius: 30,
+  },
+
+  buttonText: {
+    color: 'white',
+    fontSize: 18,
+    fontWeight: '800',
+    alignSelf: 'center',
+    letterSpacing: 0.4,
+  },
+})
